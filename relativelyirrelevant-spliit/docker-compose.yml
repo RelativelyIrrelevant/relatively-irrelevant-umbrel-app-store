@@ -3,9 +3,7 @@ version: "3.8"
 services:
   app_proxy:
     environment:
-      # IMPORTANT: Umbrel expects the DNS name of the web container as:
       # <app-id>_<service-name>_1
-      # Here the service name is "app"
       APP_HOST: relativelyirrelevant-spliit_app_1
       APP_PORT: 3000
 
@@ -13,10 +11,10 @@ services:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      # Use whatever Spliit expects (their healthcheck uses -U postgres)
-      POSTGRES_DB: spliit
+      POSTGRES_PASSWORD: "hqmcwdrvavdyuFCPFUQCVSFXPGF36566"
+      # Spliit's env example doesn't set these, but it's safer/cleaner to set:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: hqmcwdrvavdyuFCPFUQCVSFXPGF36566
+      POSTGRES_DB: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -31,18 +29,16 @@ services:
       dockerfile: Dockerfile
     image: relativelyirrelevant-spliit:latest
     restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
     expose:
       - "3000"
     environment:
-      # Prisma-style DB URL (most likely what Spliit uses internally)
-      DATABASE_URL: postgres://postgres:hqmcwdrvavdyuFCPFUQCVSFXPGF36566@db:5432/spliit
-
-      # Add any additional variables from Spliit's container.env.example here
-      # (S3/OpenAI opt-in features, etc).
+      # Mirrors container.env.example logic, but we can’t do ${POSTGRES_PASSWORD}
+      # interpolation reliably without an env_file, so we repeat the password.
+      POSTGRES_PRISMA_URL: "postgresql://postgres:change-me-to-a-strong-password@db"
+      POSTGRES_URL_NON_POOLING: "postgresql://postgres:hqmcwdrvavdyuFCPFUQCVSFXPGF36566@db"
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   postgres_data:
-

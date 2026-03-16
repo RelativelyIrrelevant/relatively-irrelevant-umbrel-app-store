@@ -1,1 +1,20 @@
+id: relativelyirrelevant-spliit
+name: Spliit
+version: "1.0.0"
+tagline: Free and open source alternative to Splitwise
+description: >-
+  Spliit is a self-hosted expense splitting app. Create groups, add expenses,
+  attach receipts, and track balances with friends.
+
+developer: spliit-app
+website: https://spliit.app/
+repo: https://github.com/spliit-app/spliit
+support: https://github.com/spliit-app/spliit/issues
+
+# This is the port the web UI listens on *inside* the container.
+# Umbrel routes to it via app_proxy (no host port binding needed).
+port: 3000
+
+releaseNotes: >-
+  Initial release for this community app store.
 

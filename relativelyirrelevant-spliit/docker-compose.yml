@@ -16,7 +16,7 @@ services:
       # Use whatever Spliit expects (their healthcheck uses -U postgres)
       POSTGRES_DB: spliit
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: change-me-to-a-strong-password
+      POSTGRES_PASSWORD: hqmcwdrvavdyuFCPFUQCVSFXPGF36566
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -38,7 +38,7 @@ services:
       - "3000"
     environment:
       # Prisma-style DB URL (most likely what Spliit uses internally)
-      DATABASE_URL: postgres://postgres:change-me-to-a-strong-password@db:5432/spliit
+      DATABASE_URL: postgres://postgres:hqmcwdrvavdyuFCPFUQCVSFXPGF36566@db:5432/spliit
 
       # Add any additional variables from Spliit's container.env.example here
       # (S3/OpenAI opt-in features, etc).
